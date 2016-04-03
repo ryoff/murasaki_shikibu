@@ -1,6 +1,8 @@
 module MurasakiShikibu
   class Type < ActiveRecord::Type::String
     def initialize(*args, &block)
+      fail LocalJumpError unless block_given?
+
       @converter = block
 
       super(*args)
