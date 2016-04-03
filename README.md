@@ -11,7 +11,7 @@ before callback などでもDB保存前の変換は可能ですが、変換後�
 
 MurasakiShikibuでは、
 
-```
+````ruby
 attribute :name, MurasakiShikibu::Type.new { |name| name.capitalize }
 ```
 
