@@ -19,6 +19,9 @@ attribute :name, MurasakiShikibu::Type.new { |name| name.capitalize }
 
 gem名は、校了や清書といった文学っぽいイメージから、日本を代表する作家・歌人から名付けています。
 
+rails5ではAttributesAPIが使用できそうです
+http://edgeapi.rubyonrails.org/classes/ActiveRecord/Attributes/ClassMethods.html
+
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -37,7 +40,7 @@ Or install it yourself as:
 
 ## Usage
 
-```
+````ruby
 class User < ActiveRecord::Base
   attribute :name, MurasakiShikibu::Type.new { |name| name.capitalize }
   attribute :address, MurasakiShikibu::Type.new { |name| name.tr('0-9a-zA-Z', '０-９ａ-ｚＡ-Ｚ') }
