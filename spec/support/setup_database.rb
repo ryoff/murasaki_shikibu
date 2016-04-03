@@ -6,6 +6,7 @@ class CreateAllTables < ActiveRecord::Migration
     create_table(:users) do |t|
       t.string :name
       t.string :address
+      t.string :country
     end
   end
 end

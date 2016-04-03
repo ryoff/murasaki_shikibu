@@ -3,16 +3,21 @@ require 'spec_helper'
 class User < ActiveRecord::Base
   attribute :name, MurasakiShikibu::Type.new { |name| name.capitalize }
   attribute :address, MurasakiShikibu::Type.new { |name| name.tr('0-9a-zA-Z', '０-９ａ-ｚＡ-Ｚ') }
+
+  include MurasakiShikibu
+  murasaki_shikibu :country do |country|
+    country.upcase
+  end
 end
 
 describe MurasakiShikibu do
+  let(:user) { User.new(name: 'ryoff', address: '東京1-2-3', country: 'japan') }
+
   it 'has a version number' do
     expect(MurasakiShikibu::VERSION).not_to be nil
   end
 
   describe '#type_cast_from_user' do
-    let(:user) { User.new(name: 'ryoff', address: '東京1-2-3') }
-
     describe "name" do
       subject { user.name }
 
@@ -26,11 +31,16 @@ describe MurasakiShikibu do
       it { is_expected.to eq '東京１-２-３' }
       it { expect(user.address_before_type_cast).to eq '東京1-2-3' }
     end
+
+    describe "country" do
+      subject { user.country }
+
+      it { is_expected.to eq 'JAPAN' }
+      it { expect(user.country_before_type_cast).to eq 'japan' }
+    end
   end
 
   describe '#type_cast_for_database' do
-    let(:user) { User.new(name: 'ryoff', address: '東京1-2-3') }
-
     before { user.save }
 
     context 'using where' do
@@ -44,6 +54,12 @@ describe MurasakiShikibu do
         subject { User.where(address: '東京1-2-3').first.try!(:address) }
 
         it { is_expected.to eq '東京１-２-３' }
+      end
+
+      describe "country" do
+        subject { User.where(country: 'japan').first.try!(:country) }
+
+        it { is_expected.to eq 'JAPAN' }
       end
     end
 
@@ -59,8 +75,12 @@ describe MurasakiShikibu do
 
         it { is_expected.to eq '東京１-２-３' }
       end
+
+      describe "country" do
+        subject { User.find_by(country: 'japan').try!(:country) }
+
+        it { is_expected.to eq 'JAPAN' }
+      end
     end
-
-
   end
 end
