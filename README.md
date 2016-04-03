@@ -13,6 +13,13 @@ MurasakiShikibuでは、
 
 ````ruby
 attribute :name, MurasakiShikibu::Type.new { |name| name.capitalize }
+
+or
+
+include MurasakiShikibu
+murasaki_shikibu :country do |country|
+  country.upcase
+end
 ```
 
 といった記述をすることで、 `保存前のフォーマット変更` `検索文字列のフォーマット変更` を統一で行います。
@@ -43,8 +50,21 @@ Or install it yourself as:
 ````ruby
 class User < ActiveRecord::Base
   attribute :name, MurasakiShikibu::Type.new { |name| name.capitalize }
-  attribute :address, MurasakiShikibu::Type.new { |name| name.tr('0-9a-zA-Z', '０-９ａ-ｚＡ-Ｚ') }
+  attribute :address, MurasakiShikibu::Type.new { |address| address.tr('0-9a-zA-Z', '０-９ａ-ｚＡ-Ｚ') }
 end
+
+Or
+
+class User < ActiveRecord::Base
+  include MurasakiShikibu
+  murasaki_shikibu :name do |name|
+    name.capitalize
+  end
+  murasaki_shikibu :address do |address|
+    address.tr('0-9a-zA-Z', '０-９ａ-ｚＡ-Ｚ')
+  end
+end
+
 
 user = User.new(name: 'ryoff', address: '東京1-2-3')
 user.name    # Ryoff
