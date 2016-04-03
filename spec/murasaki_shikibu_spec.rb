@@ -17,12 +17,14 @@ describe MurasakiShikibu do
       subject { user.name }
 
       it { is_expected.to eq 'Ryoff' }
+      it { expect(user.name_before_type_cast).to eq 'ryoff' }
     end
 
     describe "address" do
       subject { user.address }
 
       it { is_expected.to eq '東京１-２-３' }
+      it { expect(user.address_before_type_cast).to eq '東京1-2-3' }
     end
   end
 
