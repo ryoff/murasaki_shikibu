@@ -2,7 +2,7 @@ require 'spec_helper'
 
 class User < ActiveRecord::Base
   attribute :name, MurasakiShikibu::Type.new { |name| name.capitalize }
-  attribute :address, MurasakiShikibu::Type.new { |name| name.tr('0-9a-zA-Z', '０-９ａ-ｚＡ-Ｚ') }
+  attribute :address, MurasakiShikibu::Type.new { |address| address.tr('0-9a-zA-Z', '０-９ａ-ｚＡ-Ｚ') }
 
   include MurasakiShikibu
   murasaki_shikibu :country do |country|
