@@ -5,7 +5,7 @@ module MurasakiShikibu
   extend ActiveSupport::Concern
 
   module ClassMethods
-    def murasaki_shikibu(attribute_name, **options, &block)
+    def murasaki_shikibu(attribute_name, &block)
       attribute_name = attribute_name.to_sym
 
       attribute attribute_name, MurasakiShikibu::Type.new(&block)
