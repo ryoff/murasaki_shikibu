@@ -1,8 +1,23 @@
 # MurasakiShikibu
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/murasaki_shikibu`. To experiment with that code, run `bin/console` for an interactive prompt.
+MurasakiShikibuは、表記ゆれ問題解決のために、名寄せを行うことを目的としているgemです。
 
-TODO: Delete this and the text above, and describe your gem
+- 住所を全角数字で統一したい
+- 名前は大文字に統一したい
+
+など、DBへの保存前にフォーマットを統一するような用途を想定しています。
+
+before callback などでもDB保存前の変換は可能ですが、変換後のvalueで検索するにはwhere文やfind_by文のたびに、明示的に変換する必要があります。
+
+MurasakiShikibuでは、
+
+```
+attribute :name, MurasakiShikibu::Type.new { |name| name.capitalize }
+```
+
+といった記述をすることで、 `保存前のフォーマット変更` `検索文字列のフォーマット変更` を統一で行います。
+
+gem名は、校了や清書といった文学っぽいイメージから、日本を代表する作家・歌人から名付けています。
 
 ## Installation
 
@@ -22,18 +37,22 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+```
+class User < ActiveRecord::Base
+  attribute :name, MurasakiShikibu::Type.new { |name| name.capitalize }
+  attribute :address, MurasakiShikibu::Type.new { |name| name.tr('0-9a-zA-Z', '０-９ａ-ｚＡ-Ｚ') }
+end
 
-## Development
+user = User.new(name: 'ryoff', address: '東京1-2-3')
+user.name    # Ryoff
+user.address # 東京１-２-３
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
-
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
-
-## Contributing
-
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/murasaki_shikibu. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](contributor-covenant.org) code of conduct.
-
+User.new(name: 'ryoff', address: '東京1-2-3').save
+User.where(name: 'ryoff').first.try!(:name)           # Ryoff
+User.find_by(name: 'ryoff').try!(:name)               # Ryoff
+User.where(address: '東京1-2-3').first.try!(:address) # 東京１-２-３
+User.find_by(address: '東京1-2-3').try!(:address)     # 東京１-２-３
+```
 
 ## License
 
