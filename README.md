@@ -14,9 +14,10 @@ MurasakiShikibuでは、
 ````ruby
 attribute :name, MurasakiShikibu::Type.new { |name| name.capitalize }
 
-or
+# Or
 
 include MurasakiShikibu
+
 murasaki_shikibu :country do |country|
   country.upcase
 end
@@ -53,10 +54,11 @@ class User < ActiveRecord::Base
   attribute :address, MurasakiShikibu::Type.new { |address| address.tr('0-9a-zA-Z', '０-９ａ-ｚＡ-Ｚ') }
 end
 
-Or
+# Or if want to use DO-END
 
 class User < ActiveRecord::Base
   include MurasakiShikibu
+
   murasaki_shikibu :name do |name|
     name.capitalize
   end
