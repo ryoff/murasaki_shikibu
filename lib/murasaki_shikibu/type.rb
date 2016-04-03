@@ -13,11 +13,23 @@ module MurasakiShikibu
     end
 
     def type_cast_from_user(value)
-      super(@converter.call(value))
+      if value.nil?
+        nil
+      elsif value.respond_to?(:to_s)
+        super(@converter.call(value.to_s))
+      else
+        super
+      end
     end
 
     def type_cast_for_database(value)
-      super(@converter.call(value))
+      if value.nil?
+        nil
+      elsif value.respond_to?(:to_s)
+        super(@converter.call(value.to_s))
+      else
+        super
+      end
     end
   end
 end
