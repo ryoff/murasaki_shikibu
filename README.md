@@ -79,6 +79,26 @@ User.where(address: '東京1-2-3').first.address # 東京１-２-３
 User.find_by(address: '東京1-2-3').address     # 東京１-２-３
 ```
 
+```ruby
+class Bank < ActiveRecord::Base
+  attribute :name, MurasakiShikibu::Type.new { name.upcase.tr('A-Z', 'Ａ-Ｚ') }
+
+  # Or
+
+  include MurasakiShikibu
+
+  murasaki_shikibu :name do |name|
+    name.upcase.tr('A-Z', 'Ａ-Ｚ')
+  end
+end
+
+Bank.where(name: '三菱東京UFJ銀行').first.name    # 三菱東京ＵＦＪ銀行
+Bank.where(name: '三菱東京ＵＦＪ銀行').first.name # 三菱東京ＵＦＪ銀行
+Bank.find_by(name: 'SMBC信託銀行').name     # ＳＭＢＣ信託銀行
+Bank.find_by(name: 'smbc信託銀行').name     # ＳＭＢＣ信託銀行
+Bank.find_by(name: 'ＳＭＢＣ信託銀行').name # ＳＭＢＣ信託銀行
+```
+
 ## License
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
