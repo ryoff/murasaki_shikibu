@@ -13,6 +13,7 @@ MurasakiShikibuでは、
 
 ```ruby
 attribute :name, MurasakiShikibu::Type.new { |name| name.capitalize }
+# https://apidock.com/rails/ActiveRecord/Attributes/ClassMethods/attribute
 
 # Or
 
@@ -26,9 +27,6 @@ end
 といった記述をすることで、 `保存前のフォーマット変更` `検索文字列のフォーマット変更` を統一で行います。
 
 gem名は、校了や清書といった文学っぽいイメージから、日本を代表する作家・歌人から名付けています。
-
-rails5ではAttributesAPIが使用できそうです
-http://edgeapi.rubyonrails.org/classes/ActiveRecord/Attributes/ClassMethods.html
 
 ## Installation
 
