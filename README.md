@@ -71,10 +71,12 @@ user.name    # Ryoff
 user.address # 東京１-２-３
 
 User.new(name: 'ryoff', address: '東京1-2-3').save
-User.where(name: 'ryoff').first.try!(:name)           # Ryoff
-User.find_by(name: 'ryoff').try!(:name)               # Ryoff
-User.where(address: '東京1-2-3').first.try!(:address) # 東京１-２-３
-User.find_by(address: '東京1-2-3').try!(:address)     # 東京１-２-３
+
+User.where(name: 'ryoff').first.name # Ryoff
+User.find_by(name: 'ryoff').name     # Ryoff
+
+User.where(address: '東京1-2-3').first.address # 東京１-２-３
+User.find_by(address: '東京1-2-3').address     # 東京１-２-３
 ```
 
 ## License
