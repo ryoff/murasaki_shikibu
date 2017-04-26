@@ -11,7 +11,7 @@ before callback などでもDB保存前の変換は可能ですが、変換後�
 
 MurasakiShikibuでは、
 
-````ruby
+```ruby
 attribute :name, MurasakiShikibu::Type.new { |name| name.capitalize }
 
 # Or
@@ -48,7 +48,7 @@ Or install it yourself as:
 
 ## Usage
 
-````ruby
+```ruby
 class User < ActiveRecord::Base
   attribute :name, MurasakiShikibu::Type.new { |name| name.capitalize }
   attribute :address, MurasakiShikibu::Type.new { |address| address.tr('0-9a-zA-Z', '０-９ａ-ｚＡ-Ｚ') }
