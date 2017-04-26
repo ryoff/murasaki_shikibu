@@ -12,7 +12,7 @@ module MurasakiShikibu
       :string
     end
 
-    def type_cast_from_user(value)
+    def cast(value)
       if value.nil?
         nil
       elsif value.respond_to?(:to_s)
@@ -21,8 +21,9 @@ module MurasakiShikibu
         super
       end
     end
+    alias :type_cast_from_user :cast
 
-    def type_cast_for_database(value)
+    def serialize(value)
       if value.nil?
         nil
       elsif value.respond_to?(:to_s)
@@ -31,5 +32,6 @@ module MurasakiShikibu
         super
       end
     end
+    alias :type_cast_for_database :serialize
   end
 end
