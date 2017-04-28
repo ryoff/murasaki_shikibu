@@ -12,7 +12,7 @@ module MurasakiShikibu
       :string
     end
 
-    def cast(value)
+    define_method(ActiveRecord::VERSION::MAJOR >= 5 ? 'cast' : 'type_cast_from_user') do |value|
       if value.nil?
         nil
       elsif value.respond_to?(:to_s)
@@ -21,9 +21,8 @@ module MurasakiShikibu
         super
       end
     end
-    alias :type_cast_from_user :cast
 
-    def serialize(value)
+    define_method(ActiveRecord::VERSION::MAJOR >= 5 ? 'serialize' : 'type_cast_for_database') do |value|
       if value.nil?
         nil
       elsif value.respond_to?(:to_s)
@@ -32,6 +31,5 @@ module MurasakiShikibu
         super
       end
     end
-    alias :type_cast_for_database :serialize
   end
 end
