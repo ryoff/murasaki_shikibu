@@ -1,5 +1,7 @@
 # MurasakiShikibu
 
+[![Build Status](https://travis-ci.org/ryoff/murasaki_shikibu.svg?branch=master)](https://travis-ci.org/ryoff/murasaki_shikibu)
+
 MurasakiShikibuは、表記ゆれ問題解決のために、名寄せを行うことを目的としているgemです。
 
 - 住所を全角数字で統一したい
