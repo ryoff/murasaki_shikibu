@@ -6,9 +6,9 @@ rvm:
   - 2.4.1
 
 gemfile:
-  - gemfiles/rails_42.gemfile
-  - gemfiles/rails_50.gemfile
-  - gemfiles/rails_51.gemfile
+  - gemfiles/activerecord_42.gemfile
+  - gemfiles/activerecord_50.gemfile
+  - gemfiles/activerecord_51.gemfile
 
 before_install: gem install bundler -v 1.10.6
 
